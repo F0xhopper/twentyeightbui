@@ -1,44 +1,45 @@
 import { Doughnut, Chart } from "react-chartjs-2";
 import "chart.js/auto";
-import { useState } from "react";
-Chart.plugins.register("DoughnutLabel");
-const CallThisMonth = () => {
-  const [doughnutData, setDoughnutData] = useState([300, 200]);
-  const options = {
-    cutout: 130,
+import { useEffect, useState } from "react";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
+const CallThisMonth = () => {
+  const [doughnutData, setDoughnutData] = useState([17, 200]);
+  const options = {
+    cutout: 96,
+    events: [],
     plugins: {
       legend: {
         display: false,
       },
     },
-    doughnutlabel: {
-      text: "Center Text",
-      color: "#000000", // Text color
-      fontStyle: "Arial", // Font style
-      sidePadding: 20, // Spacing from the sides
-    },
   };
+
   const data = {
     labels: ["Grey", "Orange"],
     datasets: [
       {
         data: doughnutData,
-        backgroundColor: ["lightgrey", "orange"],
+        backgroundColor: ["#DDDDDD", "#F68B15"],
         hoverBackgroundColor: ["orange", "grey"],
       },
     ],
   };
   function randomiseData() {
-    setDoughnutData([
-      Math.floor(Math.random() * (0 - 200 + 1)),
-      Math.floor(Math.random() * (0 - 200 + 1)),
-    ]);
+    let randomNum = Math.floor(Math.random() * (28 - 10 + 1) + 10);
+    setDoughnutData([randomNum, 28 - randomNum]);
   }
+  useEffect(() => {
+    randomiseData();
+  }, []);
   return (
     <div className="callsThisMonthContainer">
       <h3>Calls this month</h3>
-      <Doughnut data={data} options={options} onClick={randomiseData} />
+      <div className="doughnutContainer" onClick={randomiseData}>
+        <h2 className="firstNumberPie">{doughnutData[0]}</h2>
+        <h2 className="dashPie">/</h2> <h2 className="secondNumberPie">28</h2>
+        <Doughnut data={data} options={options} />
+      </div>
     </div>
   );
 };
