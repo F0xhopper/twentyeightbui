@@ -27,7 +27,7 @@ const CallThisMonth = () => {
   };
   function randomiseData() {
     let randomNum = Math.floor(Math.random() * (28 - 10 + 1) + 10);
-    setDoughnutData([randomNum, 28 - randomNum]);
+    setDoughnutData([28 - randomNum, randomNum]);
   }
   useEffect(() => {
     randomiseData();
@@ -36,7 +36,7 @@ const CallThisMonth = () => {
     <div className="callsThisMonthContainer">
       <h3>Calls this month</h3>
       <div className="doughnutContainer" onClick={randomiseData}>
-        <h2 className="firstNumberPie">{doughnutData[0]}</h2>
+        <h2 className="firstNumberPie">{doughnutData[1]}</h2>
         <h2 className="dashPie">/</h2> <h2 className="secondNumberPie">28</h2>
         <Doughnut data={data} options={options} />
       </div>
